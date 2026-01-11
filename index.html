@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="temas/material-theme/css/dark.css">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
+    <!-- Mobile Responsive Stylesheet -->
+    <link rel="stylesheet" href="mobile.css">
 </head>
 <body>
 
@@ -37,10 +39,18 @@
 </nav>
 
 <div class="container">
+    <!-- OVERLAY PARA FECHAR SIDEBAR NO MOBILE -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- BOTÃO HAMBURGUER MOBILE -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        📱
+    </button>
+
     <!-- PÁGINA: CONFIGURADOR -->
     <div class="page-content active" id="page-configurator">
         <!-- SIDEBAR DE NAVEGAÇÃO DE TELAS -->
-        <aside class="screens-sidebar">
+        <aside class="screens-sidebar" id="screensSidebar">
             <div class="sidebar-header">
                 <h3>📺 Telas</h3>
             </div>

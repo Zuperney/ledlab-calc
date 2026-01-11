@@ -119,6 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initScreensUI();
     renderScreenList();
     initInputPersistence();
+    initMobileMenu(); // Mobile menu initialization
 });
 
 function calcularTudo() {
@@ -796,6 +797,70 @@ function initInputPersistence() {
         });
     }
 }
+
+// ===== MOBILE MENU FUNCTIONALITY =====
+function initMobileMenu() {
+    const menuToggle = document.getElementById('mobileMenuToggle');
+    const sidebar = document.getElementById('screensSidebar');
+    const overlay = document.getElementById('sidebarOverlay');
+
+    if (!menuToggle || !sidebar || !overlay) {
+        console.warn('⚠️ Mobile menu elements not found');
+        return;
+    }
+
+    // Toggle sidebar
+    const toggleSidebar = () => {
+        const isOpen = sidebar.classList.contains('mobile-open');
+        if (isOpen) {
+            sidebar.classList.remove('mobile-open');
+            overlay.classList.remove('active');
+            menuToggle.textContent = '📱';
+        } else {
+            sidebar.classList.add('mobile-open');
+            overlay.classList.add('active');
+            menuToggle.textContent = '✖️';
+        }
+    };
+
+    // Close sidebar
+    const closeSidebar = () => {
+        sidebar.classList.remove('mobile-open');
+        overlay.classList.remove('active');
+        menuToggle.textContent = '📱';
+    };
+
+    // Event listeners
+    menuToggle.addEventListener('click', toggleSidebar);
+    overlay.addEventListener('click', closeSidebar);
+
+    // Close sidebar when screen item is clicked (mobile only)
+    const screensList = document.getElementById('screensList');
+    if (screensList) {
+        screensList.addEventListener('click', (e) => {
+            if (e.target.classList.contains('screen-item')) {
+                // Check if mobile (window width < 768px)
+                if (window.innerWidth < 768) {
+                    setTimeout(closeSidebar, 300); // Small delay for better UX
+                }
+            }
+        });
+    }
+
+    // Close sidebar on window resize to desktop
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (window.innerWidth >= 768) {
+                closeSidebar();
+            }
+        }, 250);
+    });
+
+    console.log('📱 Mobile menu initialized');
+}
+
 
 // ===== ESTATÍSTICAS FÍSICAS (FASE 2) =====
 function calculatePhysicalStats() {

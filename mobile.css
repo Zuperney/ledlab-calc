@@ -1,0 +1,523 @@
+/* =============================================
+   MOBILE.CSS - Responsividade Total Mobile-First
+   ============================================= */
+
+/* ===== VARIÁVEIS MOBILE ===== */
+:root {
+    --mobile-header-height: 60px;
+    --mobile-sidebar-width: 280px;
+    --mobile-touch-target: 44px;
+}
+
+/* ===== HAMBURGUER MENU ===== */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 1000;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:active {
+    transform: scale(0.95);
+}
+
+/* ===== OVERLAY PARA SIDEBAR ===== */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 998;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+}
+
+/* ===== MEDIA QUERIES: TABLET (768px - 1024px) ===== */
+@media (max-width: 1024px) {
+    .nav-container {
+        padding: 12px 15px;
+    }
+
+    .configurator-main {
+        padding: 20px 15px;
+    }
+
+    .input-group {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===== MEDIA QUERIES: MOBILE (< 768px) ===== */
+@media (max-width: 768px) {
+    
+    /* === NAVEGAÇÃO PRINCIPAL === */
+    .nav-container {
+        padding: 10px 15px;
+    }
+
+    .nav-brand {
+        font-size: 1.1rem;
+    }
+
+    .brand-icon {
+        font-size: 1.3rem;
+    }
+
+    .nav-button {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+        min-width: 44px;
+        min-height: 44px;
+    }
+
+    .nav-label {
+        display: none;
+    }
+
+    .nav-icon {
+        font-size: 1.2rem;
+    }
+
+    .theme-btn {
+        width: 44px;
+        height: 44px;
+    }
+
+    /* === CONTAINER PRINCIPAL === */
+    .container {
+        padding: 0;
+    }
+
+    /* === LAYOUT CONFIGURADOR === */
+    #page-configurator {
+        flex-direction: column;
+        min-height: auto;
+    }
+
+    /* === SIDEBAR COLAPSÁVEL === */
+    .screens-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: var(--mobile-sidebar-width);
+        height: 100vh;
+        z-index: 999;
+        transition: left 0.3s ease;
+        box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+        max-width: 85vw;
+    }
+
+    .screens-sidebar.mobile-open {
+        left: 0;
+    }
+
+    .sidebar-header {
+        padding: 20px 15px;
+        border-bottom: 2px solid var(--border);
+    }
+
+    .sidebar-header h3 {
+        font-size: 1.2rem;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sidebar-overlay {
+        display: block;
+    }
+
+    /* === CONTEÚDO PRINCIPAL === */
+    .configurator-main {
+        width: 100%;
+        padding: 15px 10px;
+        margin-top: 0;
+    }
+
+    .configurator-main h1 {
+        font-size: 1.5rem;
+        margin: 10px 0 20px 0;
+    }
+
+    /* === INPUTS E FORMULÁRIOS === */
+    .input-group {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .input-item {
+        width: 100%;
+    }
+
+    .input-item label {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+    }
+
+    .input-item input,
+    .input-item select {
+        font-size: 16px; /* Previne zoom no iOS */
+        padding: 12px;
+        min-height: 44px;
+    }
+
+    /* === BOTÕES === */
+    button,
+    .btn-add-screen,
+    #calculateButton {
+        min-height: 44px;
+        font-size: 1rem;
+        padding: 12px 16px;
+    }
+
+    #calculateButton {
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 14px;
+    }
+
+    /* === CARDS === */
+    .card {
+        border-radius: 8px;
+        padding: 15px;
+        margin: 15px 0;
+    }
+
+    .physical-stats-card {
+        padding: 15px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .stat-item {
+        padding: 10px 12px;
+    }
+
+    .stat-label {
+        font-size: 0.8rem;
+    }
+
+    .stat-value {
+        font-size: 1.2rem;
+    }
+
+    /* === TABS === */
+    .tabs {
+        display: flex;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 5px;
+        padding-bottom: 5px;
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-button {
+        flex-shrink: 0;
+        min-width: 140px;
+        padding: 12px 16px;
+        font-size: 0.85rem;
+        white-space: nowrap;
+    }
+
+    /* === RESULTADOS === */
+    .result-section {
+        grid-template-columns: 1fr;
+    }
+
+    .full-width {
+        grid-column: span 1;
+    }
+
+    .result-card {
+        padding: 15px;
+    }
+
+    .result-label {
+        font-size: 0.85rem;
+    }
+
+    .result-value {
+        font-size: 1.3rem;
+    }
+
+    /* === CANVAS === */
+    .canvas-container {
+        overflow-x: auto;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: 8px;
+        max-height: 60vh;
+    }
+
+    canvas {
+        display: block;
+        min-width: 100%;
+        height: auto;
+    }
+
+    /* === OVERCLOCK BOX === */
+    .overclock-box {
+        padding: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .overclock-info {
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
+
+    /* === TELAS DA SIDEBAR === */
+    .screen-item {
+        padding: 14px 12px;
+        margin: 6px 10px;
+        font-size: 0.95rem;
+        min-height: 44px;
+    }
+
+    .btn-add-screen {
+        margin: 10px;
+        padding: 14px;
+        font-size: 1rem;
+    }
+
+    .sidebar-footer {
+        padding: 12px;
+    }
+
+    .summary-item {
+        padding: 8px 0;
+        font-size: 0.95rem;
+    }
+
+    /* === MODAL DE RELATÓRIO === */
+    #reportModal {
+        padding: 10px;
+    }
+
+    #reportModal h1 {
+        font-size: 1.3rem;
+    }
+
+    #reportModal h2 {
+        font-size: 1.1rem;
+    }
+
+    .report-screen-section {
+        margin: 15px 0;
+        padding: 12px;
+    }
+}
+
+/* ===== MEDIA QUERIES: MOBILE PEQUENO (< 480px) ===== */
+@media (max-width: 480px) {
+    
+    .nav-container {
+        padding: 8px 10px;
+        gap: 10px;
+    }
+
+    .nav-brand {
+        font-size: 1rem;
+    }
+
+    .brand-icon {
+        font-size: 1.2rem;
+    }
+
+    .nav-button {
+        padding: 8px 10px;
+        min-width: 40px;
+        min-height: 40px;
+    }
+
+    .configurator-main {
+        padding: 10px 8px;
+    }
+
+    .configurator-main h1 {
+        font-size: 1.3rem;
+    }
+
+    .input-item label {
+        font-size: 0.85rem;
+    }
+
+    .card {
+        padding: 12px;
+    }
+
+    .stat-value {
+        font-size: 1.1rem;
+    }
+
+    .tab-button {
+        min-width: 120px;
+        padding: 10px 12px;
+        font-size: 0.8rem;
+    }
+
+    .mobile-menu-toggle {
+        width: 52px;
+        height: 52px;
+        bottom: 15px;
+        right: 15px;
+    }
+
+    .screens-sidebar {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* ===== LANDSCAPE MOBILE ===== */
+@media (max-width: 768px) and (orientation: landscape) {
+    
+    .nav-container {
+        padding: 8px 15px;
+    }
+
+    .configurator-main h1 {
+        font-size: 1.2rem;
+        margin: 5px 0 15px 0;
+    }
+
+    .input-group {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .canvas-container {
+        max-height: 70vh;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ===== ANIMAÇÕES MOBILE ===== */
+@media (max-width: 768px) {
+    
+    @keyframes slideInFromLeft {
+        from {
+            transform: translateX(-100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+
+    .screens-sidebar.mobile-open {
+        animation: slideInFromLeft 0.3s ease;
+    }
+
+    .sidebar-overlay.active {
+        animation: fadeIn 0.3s ease;
+    }
+}
+
+/* ===== MELHORIAS DE TOUCH ===== */
+@media (hover: none) and (pointer: coarse) {
+    
+    /* Remove hover effects em dispositivos touch */
+    .nav-button:hover {
+        transform: none;
+    }
+
+    .btn-add-screen:hover {
+        transform: none;
+    }
+
+    .screen-item:hover {
+        background: rgba(13, 110, 253, 0.05);
+    }
+
+    /* Aumenta áreas clicáveis */
+    button,
+    .tab-button,
+    .screen-item,
+    select,
+    input {
+        min-height: 44px;
+    }
+
+    /* Melhora feedback visual em tap */
+    button:active,
+    .tab-button:active,
+    .screen-item:active {
+        opacity: 0.7;
+        transform: scale(0.98);
+    }
+}
+
+/* ===== ACESSIBILIDADE MOBILE ===== */
+@media (max-width: 768px) {
+    
+    /* Aumenta contraste para leitura em telas pequenas */
+    .result-label {
+        font-weight: 600;
+    }
+
+    /* Espaçamento touch-friendly */
+    * {
+        -webkit-tap-highlight-color: rgba(13, 110, 253, 0.1);
+    }
+
+    /* Previne zoom acidental */
+    input[type="number"],
+    input[type="text"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    /* Scroll suave */
+    html {
+        scroll-behavior: smooth;
+    }
+}
