@@ -169,6 +169,32 @@ body {
 	font-size: 1.2rem;
 }
 
+/* ===== BARRA DE ABAS VISUAL ===== */
+.tabs-bar {
+	position: relative;
+	height: 3px;
+	background: var(--border);
+	width: 100%;
+}
+
+.tab-indicator {
+	position: absolute;
+	height: 100%;
+	background: var(--primary);
+	width: 50%;
+	left: 0;
+	transition: left 0.3s ease;
+	border-radius: 0 2px 2px 0;
+}
+
+.tab-indicator.at-configurator {
+	left: 0;
+}
+
+.tab-indicator.at-cadastro {
+	left: 50%;
+}
+
 @media (max-width: 768px) {
 	.nav-container {
 		flex-wrap: wrap;
@@ -207,12 +233,15 @@ body {
 
 /* Page System */
 .page-content {
-	display: none;
+	display: none !important;
 	width: 100%;
+	height: auto;
+	min-height: 0;
+	flex: 0 0 auto;
 }
 
 .page-content.active {
-	display: block;
+	display: block !important;
 }
 
 .container {

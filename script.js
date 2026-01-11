@@ -459,6 +459,7 @@ function initTabs() {
 function initNavigation() {
     const navButtons = document.querySelectorAll('.nav-button[data-page]');
     const pages = document.querySelectorAll('.page-content');
+    const tabIndicator = document.getElementById('tabIndicator');
     
     navButtons.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -466,7 +467,21 @@ function initNavigation() {
             navButtons.forEach(b => b.classList.remove('active'));
             pages.forEach(p => p.classList.remove('active'));
             btn.classList.add('active');
+            
+            // Atualizar página ativa
             document.getElementById(`page-${targetPage}`).classList.add('active');
+            
+            // Mover indicador da barra de abas
+            if (tabIndicator) {
+                tabIndicator.classList.remove('at-configurator', 'at-cadastro');
+                if (targetPage === 'configurator') {
+                    tabIndicator.classList.add('at-configurator');
+                } else if (targetPage === 'cadastro') {
+                    tabIndicator.classList.add('at-cadastro');
+                }
+            }
+            
+            console.log(`📄 Página ativa: ${targetPage}`);
         });
     });
 }
