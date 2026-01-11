@@ -161,6 +161,20 @@
         margin: 10px 0 20px 0;
     }
 
+    /* === PÁGINA DE CADASTRO === */
+    #page-cadastro {
+        padding: 15px 10px !important;
+        margin: 0 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+    }
+
+    #page-cadastro h1 {
+        font-size: 1.3rem;
+        margin: 15px 0 20px 0;
+    }
+
     /* === INPUTS E FORMULÁRIOS === */
     .input-group {
         grid-template-columns: 1fr;
