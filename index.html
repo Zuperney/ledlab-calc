@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LedLab Configurator Pro v6.2</title>
-    <!-- Material Design Themes -->
-    <link rel="stylesheet" href="temas/material-theme/css/light.css">
-    <link rel="stylesheet" href="temas/material-theme/css/dark.css">
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="style.css">
+    <title>LedLab Configurator Pro v7.0 - Refactored</title>
+    <!-- Material Design Theme (will be dynamically loaded) -->
+    <link id="themeLink" rel="stylesheet" href="temas/material-theme/css/light.css">
+    <!-- Main Stylesheet (modular CSS) -->
+    <link rel="stylesheet" href="styles/main.css">
     <!-- Mobile Responsive Stylesheet -->
     <link rel="stylesheet" href="mobile.css">
 </head>
@@ -31,7 +30,7 @@
             </button>
         </div>
         <div class="nav-actions">
-            <button id="themeToggle" type="button" class="nav-button theme-btn">
+            <button id="themeToggleBtn" type="button" class="nav-button theme-btn">
                 <span class="theme-icon">🌙</span>
             </button>
         </div>
@@ -333,7 +332,33 @@
 </div>
 <!-- FIM CONTAINER -->
 
-<script src="script.js"></script>
+<!-- JavaScript Modules (Modular Architecture v7.0) -->
+<!-- Storage Module -->
+<script src="js/modules/storage.js"></script>
+
+<!-- Screens Module -->
+<script src="js/modules/screens.js"></script>
+
+<!-- Calculations Module -->
+<script src="js/modules/calculations.js"></script>
+
+<!-- Canvas Module -->
+<script src="js/modules/canvas.js"></script>
+
+<!-- UI Module -->
+<script src="js/modules/ui.js"></script>
+
+<!-- Gabinetes Module -->
+<script src="js/modules/gabinetes.js"></script>
+
+<!-- Reports Module -->
+<script src="js/modules/reports.js"></script>
+
+<!-- Theme Module -->
+<script src="js/modules/theme.js"></script>
+
+<!-- Main Entry Point -->
+<script src="js/modules/main.js"></script>
 
 </body>
 </html>

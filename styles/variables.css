@@ -1,0 +1,38 @@
+/* ===== VARIÁVEIS GLOBAIS ===== */
+/* Material Design 3 Color System */
+
+:root,
+.light {
+	--bg: rgb(255 248 242);
+	--card-bg: rgb(255 248 242);
+	--text: rgb(31 27 19);
+	--muted: rgb(126 118 103);
+	--primary: rgb(118 91 11);
+	--primary-hover: rgb(90 67 0);
+	--accent: rgb(73 101 72);
+	--border: rgb(236 225 207);
+	--shadow: 0 4px 20px rgba(0,0,0,0.08);
+	--canvas-bg: rgb(255 248 242);
+	--badge-warning: rgb(240 83 40);
+}
+
+[data-theme="dark"],
+.dark {
+	--bg: rgb(23 19 11);
+	--card-bg: rgb(35 31 23);
+	--text: rgb(234 225 212);
+	--muted: rgb(153 144 128);
+	--primary: rgb(231 194 108);
+	--primary-hover: rgb(255 223 152);
+	--accent: rgb(175 207 171);
+	--border: rgb(77 70 57);
+	--shadow: 0 8px 30px rgba(0,0,0,0.35);
+	--canvas-bg: rgb(17 14 7);
+	--badge-warning: rgb(251 146 60);
+}
+
+/* ===== BREAKPOINTS ===== */
+/* Mobile: < 480px
+   Tablet: 481px - 768px
+   Desktop: 769px - 1024px
+   Wide: > 1024px */
