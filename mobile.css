@@ -34,7 +34,6 @@
 
 /* ===== OVERLAY PARA SIDEBAR ===== */
 .sidebar-overlay {
-    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -43,11 +42,13 @@
     background: rgba(0,0,0,0.5);
     z-index: 998;
     opacity: 0;
+    pointer-events: none;
     transition: opacity 0.3s ease;
 }
 
 .sidebar-overlay.active {
     opacity: 1;
+    pointer-events: auto;
 }
 
 /* ===== MEDIA QUERIES: TABLET (768px - 1024px) ===== */
@@ -146,10 +147,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-    }
-
-    .sidebar-overlay {
-        display: block;
     }
 
     /* === CONTEÚDO PRINCIPAL === */
