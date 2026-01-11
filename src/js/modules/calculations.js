@@ -30,15 +30,16 @@ function getCor(index) {
 /**
  * Valida dimensões de entrada
  * @param {number} pxW, pxH, panW, panH - Dimensões
+ * @param {boolean} silent - Se true, não mostra alertas
  * @returns {boolean} True se válido
  */
-function validateInputs(pxW, pxH, panW, panH) {
+function validateInputs(pxW, pxH, panW, panH, silent = false) {
     if (!pxW || !pxH || !panW || !panH) {
-        alert("Preencha todos os campos.");
+        if (!silent) alert("Preencha todos os campos.");
         return false;
     }
     if (pxW <= 0 || pxH <= 0 || panW <= 0 || panH <= 0) {
-        alert("Valores devem ser maiores que zero.");
+        if (!silent) alert("Valores devem ser maiores que zero.");
         return false;
     }
     return true;

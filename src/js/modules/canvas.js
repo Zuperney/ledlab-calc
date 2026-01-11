@@ -40,7 +40,8 @@ function desenharMapeamento(canvasId, totalW, totalH, listaCabos) {
  * @param {number} totalW, totalH - Dimensões totais
  */
 function drawCable(ctx, cabo, index, totalW, totalH) {
-    const corFinal = cabo.cor ? cabo.cor : getCor(index);
+    // Fallback para cor padrão se getCor não estiver disponível
+    const corFinal = cabo.cor ? cabo.cor : (typeof getCor === 'function' ? getCor(index) : '#2563eb');
     
     // Desenhar blocos coloridos
     ctx.fillStyle = corFinal;
@@ -61,7 +62,10 @@ function drawCable(ctx, cabo, index, totalW, totalH) {
     drawBlockNumber(ctx, cabo, index);
 
     // Desenhar linhas de cabeamento
-    drawCabingPath(ctx, cabo, getActiveScreen()?.layoutType || 'horizontal');
+    const layoutType = (typeof getActiveScreen === 'function' && getActiveScreen()) 
+        ? getActiveScreen().layoutType || 'horizontal' 
+        : 'horizontal';
+    drawCabingPath(ctx, cabo, layoutType);
 }
 
 /**
@@ -175,8 +179,10 @@ function gerarLegenda(containerId, listaCabos) {
     listaCabos.forEach((cabo, index) => {
         const item = document.createElement('div');
         item.style.marginBottom = '8px';
+        // Fallback para cor padrão se getCor não estiver disponível
+        const cor = typeof getCor === 'function' ? getCor(index) : '#2563eb';
         item.innerHTML = `
-            <span style="display: inline-block; width: 16px; height: 16px; background: ${getCor(index)}; margin-right: 8px; border-radius: 2px; border: 1px solid #ccc;"></span>
+            <span style="display: inline-block; width: 16px; height: 16px; background: ${cor}; margin-right: 8px; border-radius: 2px; border: 1px solid #ccc;"></span>
             <strong>Cabo ${index + 1}:</strong> ${cabo.gabinetes || 0} gabinetes
         `;
         container.appendChild(item);

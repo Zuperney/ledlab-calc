@@ -1,19 +1,23 @@
 /**
  * MAIN MODULE
- * Ponto de entrada da aplicação
+ * Ponto de entrada da aplicação - Orquestrador de Módulos
  * Responsável por: inicializar todos os módulos e coordenar eventos
+ * 
+ * NOTA: Este arquivo usa o padrão de escopo global para compatibilidade.
+ * Todos os módulos são carregados como scripts sequenciais no HTML.
+ * Os event listeners substituem os eventos inline (onclick, onchange).
  */
 
-// Estado global da aplicação (inicializado antes de qualquer uso)
-let currentProject = window.currentProject || createDefaultProject();
+// Estado global da aplicação
+let currentProject = null;
 
 /**
  * Inicializa aplicação quando DOM está pronto
  */
 function initApplication() {
-    console.log('🚀 Inicializando aplicação...');
+    console.log('🚀 Inicializando LedLab Configurator v7.0...');
 
-    // 1. Carrega projeto
+    // 1. Carrega projeto do storage
     currentProject = loadProject();
     console.log('✅ Projeto carregado:', currentProject.name);
 
@@ -43,15 +47,128 @@ function initApplication() {
     // 9. Inicializa modal de relatório
     initReportModal();
 
-    // 10. Carrega dados iniciais
-    calcularTudo();
+    // 10. Liga event listeners (substituindo onclick/onchange do HTML)
+    setupEventListeners();
+
+    // 11. Carrega dados iniciais (modo silencioso para não mostrar alertas)
+    calcularTudo(true);
     updatePhysicalStats();
     redrawAllCanvas();
 
-    // 11. Configura auto-save
+    // 12. Configura auto-save
     setupAutoSave();
 
     console.log('✅ Aplicação inicializada com sucesso!');
+}
+
+/**
+ * Configura todos os event listeners (substituindo eventos inline)
+ */
+function setupEventListeners() {
+    console.log('🔗 Configurando event listeners...');
+
+    // Botão de calcular
+    const btnCalcular = document.getElementById('calculateButton');
+    if (btnCalcular) {
+        btnCalcular.addEventListener('click', handleCalcular);
+    }
+
+    // Checkbox de overclock (com ou sem a div wrapper)
+    const overclockBox = document.getElementById('overclockBox');
+    const overclockMode = document.getElementById('overclockMode');
+    
+    if (overclockBox && overclockMode) {
+        // Clica na div para ativar o checkbox
+        overclockBox.addEventListener('click', (e) => {
+            if (e.target !== overclockMode) {
+                overclockMode.click();
+            }
+        });
+        
+        // Recalcula quando muda
+        overclockMode.addEventListener('change', () => {
+            const screen = getActiveScreen();
+            if (screen) {
+                screen.overclockMode = overclockMode.checked;
+                calcularTudo();
+            }
+        });
+    }
+
+    // Inputs de dimensões
+    const inputs = ['pixelX', 'pixelY', 'cabinetX', 'cabinetY'];
+    inputs.forEach(inputId => {
+        const input = document.getElementById(inputId);
+        if (input) {
+            input.addEventListener('change', handleInputChange);
+        }
+    });
+
+    // Select de gabinete
+    const gabineteSalvo = document.getElementById('gabineteSalvo');
+    if (gabineteSalvo) {
+        gabineteSalvo.addEventListener('change', loadGabineteData);
+    }
+
+    // Select de tipo de cabeamento
+    const cablingType = document.getElementById('cablingType');
+    if (cablingType) {
+        cablingType.addEventListener('change', handleCablingTypeChange);
+    }
+
+    console.log('✅ Event listeners configurados');
+}
+
+/**
+ * Handler para o botão calcular
+ */
+function handleCalcular() {
+    console.log('🔢 Executando cálculos...');
+    calcularTudo();
+    updatePhysicalStats();
+    redrawAllCanvas();
+}
+
+/**
+ * Handler para mudanças nos inputs
+ */
+function handleInputChange(e) {
+    const screen = getActiveScreen();
+    if (!screen) return;
+
+    const inputId = e.target.id;
+    const value = parseInt(e.target.value);
+
+    if (value && value > 0) {
+        switch (inputId) {
+            case 'pixelX':
+                screen.pixelX = value;
+                break;
+            case 'pixelY':
+                screen.pixelY = value;
+                break;
+            case 'cabinetX':
+                screen.cabinetX = value;
+                break;
+            case 'cabinetY':
+                screen.cabinetY = value;
+                break;
+        }
+        saveProject();
+    }
+}
+
+/**
+ * Handler para mudança de tipo de cabeamento
+ */
+function handleCablingTypeChange(e) {
+    const screen = getActiveScreen();
+    if (screen) {
+        screen.layoutType = e.target.value;
+        saveProject();
+        calcularTudo();
+        redrawAllCanvas();
+    }
 }
 
 /**
@@ -75,13 +192,14 @@ function setupAutoSave() {
 
 /**
  * Calcula tudo e atualiza interface
+ * @param {boolean} silent - Se true, não mostra alertas de validação
  */
-function calcularTudo() {
+function calcularTudo(silent = false) {
     const screen = getActiveScreen();
     if (!screen) return null;
 
-    // Valida inputs
-    if (!validateInputs(screen)) return null;
+    // Valida inputs (modo silencioso durante inicialização)
+    if (!validateInputs(screen.pixelX, screen.pixelY, screen.cabinetX, screen.cabinetY, silent)) return null;
 
     // Calcula limites
     const { limite, limitSafe } = calculateLimits(screen);

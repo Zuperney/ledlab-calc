@@ -44,6 +44,11 @@ function createDefaultProject() {
  */
 function saveProject() {
     try {
+        // Verifica se currentProject existe (pode não existir no carregamento inicial)
+        if (typeof currentProject === 'undefined' || !currentProject) {
+            console.warn('⚠️ currentProject não definido ainda');
+            return false;
+        }
         localStorage.setItem(PROJECT_STORAGE_KEY, JSON.stringify(currentProject));
         console.log('💾 Projeto salvo com sucesso');
         return true;
@@ -78,7 +83,10 @@ function clearAllData() {
     if (confirm('⚠️ CUIDADO! Isso vai deletar TODOS os projetos e gabinetes salvos. Tem certeza?')) {
         localStorage.removeItem(PROJECT_STORAGE_KEY);
         localStorage.removeItem('ledlab-gabinetes');
-        currentProject = createDefaultProject();
+        // Atualiza currentProject se ele existir
+        if (typeof currentProject !== 'undefined') {
+            currentProject = createDefaultProject();
+        }
         console.log('🗑️ Todos os dados foram limpos');
         location.reload();
     }
