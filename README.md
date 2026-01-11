@@ -142,9 +142,12 @@ led-lab_calc/
 ├── roadmap-v7.md           # Roadmap futuro (v7.0+)
 ├── .gitignore              # Exclusões do Git
 ├── LICENSE                 # Licença MIT
-└── temas/
-    └── material-theme/
-        └── css/            # Temas light/dark MD3
+└── src/                    # Código-fonte (estrutura modular)
+    ├── js/modules/         # 8 módulos JavaScript
+    ├── styles/             # 9 arquivos CSS modulares
+    └── themes/             # Temas (Material Design 3)
+        └── material-design-3/
+            └── css/        # Temas light/dark com variações
 ```
 
 ## 🤝 Contribuindo

@@ -40,7 +40,7 @@ function applyTheme(themeName) {
     // Carrega CSS do tema
     const themeLink = document.getElementById('themeLink');
     if (themeLink) {
-        themeLink.href = `temas/material-theme/css/${themeName}.css`;
+        themeLink.href = `src/themes/material-theme/css/${themeName}.css`;
     }
 
     // Salva preferência
