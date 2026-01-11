@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LedLab Configurator Pro v6.2</title>
+    <!-- Material Design Themes -->
+    <link rel="stylesheet" href="temas/material-theme/css/light.css">
+    <link rel="stylesheet" href="temas/material-theme/css/dark.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="main-nav">
+    <div class="nav-container">
+        <div class="nav-brand">
+            <span class="brand-icon">💡</span>
+            <span class="brand-text">LedLab</span>
+        </div>
+        <div class="nav-links">
+            <button class="nav-button active" data-page="configurator">
+                <span class="nav-icon">⚙️</span>
+                <span class="nav-label">Configurador</span>
+            </button>
+            <button class="nav-button" data-page="cadastro">
+                <span class="nav-icon">📦</span>
+                <span class="nav-label">Gabinetes</span>
+            </button>
+        </div>
+        <div class="nav-actions">
+            <button id="themeToggle" type="button" class="nav-button theme-btn">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- PÁGINA: CONFIGURADOR -->
+    <div class="page-content active" id="page-configurator">
+        <!-- SIDEBAR DE NAVEGAÇÃO DE TELAS -->
+        <aside class="screens-sidebar">
+            <div class="sidebar-header">
+                <h3>📺 Telas</h3>
+            </div>
+            <div class="screens-list" id="screensList">
+                <!-- Renderizado dinamicamente pelo JS -->
+            </div>
+            <button id="addScreenBtn" class="btn-add-screen">
+                <span>➕</span> Adicionar Tela
+            </button>
+
+            <!-- Relatório do Projeto -->
+            <button id="reportBtn" class="btn-add-screen" style="background: var(--accent);">
+                <span>📝</span> Gerar Relatório
+            </button>
+
+            <!-- FASE 2: Resumo Global do Projeto -->
+            <div class="sidebar-footer" id="globalSummary">
+                <div class="summary-item">
+                    <span class="summary-icon">📺</span>
+                    <span class="summary-text">0 telas</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTEÚDO PRINCIPAL -->
+        <main class="configurator-main">
+            <h1>LedLab Configurator <span style="font-size:0.5em; color:#888;">v6.2</span></h1>
+
+            <div class="input-group">
+                <div class="input-item">
+                    <label>Gabinete Cadastrado</label>
+                    <select id="gabineteSalvo">
+                        <option value="">Selecione ou use valores personalizados</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <div class="input-item">
+                    <label>Pixel Largura (px)</label>
+                    <input type="number" id="pixelX" value="192">
+                </div>
+                <div class="input-item">
+                    <label>Pixel Altura (px)</label>
+                    <input type="number" id="pixelY" value="192">
+                </div>
+                <div class="input-item">
+                    <label>Gabinetes Horizontal</label>
+                    <input type="number" id="cabinetX" value="12">
+                </div>
+                <div class="input-item">
+                    <label>Gabinetes Vertical</label>
+                    <input type="number" id="cabinetY" value="16">
+                </div>
+                <div class="input-item">
+                    <label>Cabeamento</label>
+                    <select id="cablingType">
+                        <option value="horizontal">Cabeamento: Z-Type (Horizontal)</option>
+                        <option value="vertical">Cabeamento: U-Type (Vertical)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="overclock-box" onclick="document.getElementById('overclockMode').click()">
+                <input type="checkbox" id="overclockMode" onclick="event.stopPropagation()" onchange="calcularTudo()">
+                <div>
+                    <label for="overclockMode" style="margin:0; cursor:pointer;">Habilitar Modo Overclock (Arredondar p/ Cima)</label>
+                    <div class="overclock-info">O alerta ⚠️ só aparecerá se a configuração usar a capacidade extra.</div>
+                </div>
+            </div>
+
+            <button id="calculateButton">Calcular Todas as Opções</button>
+
+            <!-- FASE 2: Card de Estatísticas Físicas -->
+            <div class="card physical-stats-card" id="physicalStatsCard" style="display: none;">
+                <h3>📊 Estatísticas Físicas</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Total de Gabinetes:</span>
+                        <span class="stat-value" id="statTotalGabinetes">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Peso Total:</span>
+                        <span class="stat-value" id="statPesoTotal">0 kg</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Consumo Total:</span>
+                        <span class="stat-value" id="statConsumoTotal">0 W</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Estimativa de Amperes:</span>
+                        <span class="stat-value" id="statAmperes">0 A</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="result-section">
+        <div class="tabs" role="tablist">
+            <button class="tab-button active" data-target="tab-manual" role="tab">Modo Manual</button>
+            <button class="tab-button" data-target="tab-largura" role="tab">Prioridade Horizontal</button>
+            <button class="tab-button" data-target="tab-altura" role="tab">Prioridade Vertical</button>
+            <button class="tab-button" data-target="tab-area" role="tab">Melhor Área</button>
+        </div>
+
+        <div class="tab-panels">
+            <div class="tab-panel active" id="tab-manual" role="tabpanel">
+                <div class="card manual-section">
+                    <h2>🛠️ Modo Manual</h2>
+                    <div style="margin-bottom: 15px;">
+                        <select id="manualSelect">
+                            <option value="">Clique em Calcular primeiro...</option>
+                        </select>
+                    </div>
+                    <div class="info-header">
+                        <span class="cabos-badge" id="badge-manual">0 Cabos</span>
+                        <span class="config-detail" id="txt-manual">---</span>
+                    </div>
+                    <canvas id="canvas-manual"></canvas>
+                    <div id="legenda-manual" class="legenda-container"></div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="tab-largura" role="tabpanel">
+                <div class="card">
+                    <h2>1. Prioridade Horizontal</h2>
+                    <div class="info-header">
+                        <span class="cabos-badge" id="badge-largura">0 Cabos</span>
+                        <span class="config-detail" id="txt-largura">---</span>
+                    </div>
+                    <canvas id="canvas-largura"></canvas>
+                    <div id="legenda-largura" class="legenda-container"></div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="tab-altura" role="tabpanel">
+                <div class="card">
+                    <h2>2. Prioridade Vertical</h2>
+                    <div class="info-header">
+                        <span class="cabos-badge" id="badge-altura">0 Cabos</span>
+                        <span class="config-detail" id="txt-altura">---</span>
+                    </div>
+                    <canvas id="canvas-altura"></canvas>
+                    <div id="legenda-altura" class="legenda-container"></div>
+                </div>
+            </div>
+
+            <div class="tab-panel" id="tab-area" role="tabpanel">
+                <div class="card">
+                    <h2>3. Sugestão Inteligente (Melhor Área)</h2>
+                    <div class="info-header">
+                        <span class="cabos-badge" id="badge-area">0 Cabos</span>
+                        <span class="config-detail" id="txt-area">---</span>
+                    </div>
+                    <canvas id="canvas-area"></canvas>
+                    <div id="legenda-area" class="legenda-container"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- FIM PÁGINA: CONFIGURADOR -->
+
+    <!-- PÁGINA: CADASTRO DE GABINETES -->
+    <div class="page-content" id="page-cadastro">
+        <h1>Gerenciar Gabinetes</h1>
+        
+        <div class="tabs" style="margin-bottom: 20px;">
+            <button class="tab-button active" data-target="tab-novo">➕ Novo Gabinete</button>
+            <button class="tab-button" data-target="tab-lista">📋 Lista de Gabinetes</button>
+        </div>
+
+        <div class="tab-panels">
+            <!-- ABA: NOVO GABINETE -->
+            <div class="tab-panel active" id="tab-novo">
+                <form id="formGabinete">
+                    <fieldset class="card">
+                        <legend><strong>Informações Básicas</strong></legend>
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="fabricante">Fabricante</label>
+                                <input type="text" id="fabricante" placeholder="Ex: UNILUMIN" required style="text-transform: uppercase;">
+                            </div>
+                            <div class="input-item">
+                                <label for="nome_gabinete">Nome do Gabinete</label>
+                                <input type="text" id="nome_gabinete" placeholder="Ex: P2.9 Indoor 500x500" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="pixel_w">Resolução Horizontal (Pixels)</label>
+                                <input type="number" id="pixel_w" placeholder="Ex: 192" required>
+                            </div>
+                            <div class="input-item">
+                                <label for="pixel_h">Resolução Vertical (Pixels)</label>
+                                <input type="number" id="pixel_h" placeholder="Ex: 192" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="mm_w">Largura (mm)</label>
+                                <input type="number" id="mm_w" placeholder="Ex: 500" step="0.1" required>
+                            </div>
+                            <div class="input-item">
+                                <label for="mm_h">Altura (mm)</label>
+                                <input type="number" id="mm_h" placeholder="Ex: 500" step="0.1" required>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="peso">Peso (Kg)</label>
+                                <input type="number" id="peso" placeholder="Ex: 7.5" step="0.1">
+                            </div>
+                            <div class="input-item">
+                                <label for="consumo">Consumo (Watts)</label>
+                                <input type="number" id="consumo" placeholder="Ex: 150">
+                            </div>
+                        </div>
+                        <div class="input-item">
+                            <label>Tipo de Ambiente</label>
+                            <div style="display: flex; gap: 20px;">
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="ambiente" value="indoor" checked> Indoor
+                                </label>
+                                <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+                                    <input type="radio" name="ambiente" value="outdoor"> Outdoor
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset class="card" style="margin-top: 20px;">
+                        <legend><strong>Especificações Técnicas (Opcional)</strong></legend>
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="pixel_pitch">Pixel Pitch (mm)</label>
+                                <input type="number" id="pixel_pitch" placeholder="Ex: 2.9" step="0.1">
+                            </div>
+                            <div class="input-item">
+                                <label for="nits">Brilho (Nits)</label>
+                                <input type="number" id="nits" placeholder="Ex: 1000">
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <div class="input-item">
+                                <label for="refresh_rate">Refresh Rate (Hz)</label>
+                                <input type="number" id="refresh_rate" placeholder="Ex: 3840">
+                            </div>
+                            <div class="input-item">
+                                <label for="ip_rating">Grau IP</label>
+                                <input type="text" id="ip_rating" placeholder="Ex: IP65">
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div style="display: flex; gap: 15px; margin-top: 25px;">
+                        <button type="submit" style="flex: 1;">💾 Salvar Gabinete</button>
+                        <button type="reset" style="flex: 1; background-color: var(--muted);">🔄 Limpar</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- ABA: LISTA DE GABINETES -->
+            <div class="tab-panel" id="tab-lista">
+                <div class="card">
+                    <div id="listaGabinetes" style="min-height: 200px;">
+                        <p style="text-align: center; color: var(--muted); padding: 40px;">Nenhum gabinete cadastrado ainda.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+            </div>
+        </div>
+    </main>
+    </div>
+    <!-- FIM PÁGINA: CONFIGURADOR -->
+
+    <!-- PÁGINA: CADASTRO -->
+    <div class="page-content" id="page-cadastro">
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
