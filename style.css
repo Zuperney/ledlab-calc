@@ -3,6 +3,11 @@
  * Main stylesheet - aggregates all modular CSS files
  */
 
+/* Material Design 3 Themes */
+@import url("src/styles/material-light.css");
+@import url("src/styles/material-dark.css");
+
+/* Modular Stylesheets */
 @import url("src/styles/variables.css");
 @import url("src/styles/base.css");
 @import url("src/styles/layout.css");
