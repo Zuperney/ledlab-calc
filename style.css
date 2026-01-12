@@ -1,0 +1,14 @@
+/* 
+ * LedLab Configurator Pro v7.0
+ * Main stylesheet - aggregates all modular CSS files
+ */
+
+@import url("src/styles/variables.css");
+@import url("src/styles/base.css");
+@import url("src/styles/layout.css");
+@import url("src/styles/nav.css");
+@import url("src/styles/sidebar.css");
+@import url("src/styles/cards.css");
+@import url("src/styles/forms.css");
+@import url("src/styles/canvas.css");
+@import url("src/styles/main.css");
