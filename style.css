@@ -1,7 +1,3 @@
-/*
- * LedLab Configurator Pro v7.0
- * Single entrypoint: themes + modular bundle (+ mobile overrides)
- */
 
 /* Material Design 3 Themes (base tokens) */
 @import url("src/styles/material-light.css");
