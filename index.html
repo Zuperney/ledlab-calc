@@ -104,8 +104,8 @@
                 </div>
             </div>
 
-            <div class="overclock-box" onclick="document.getElementById('overclockMode').click()">
-                <input type="checkbox" id="overclockMode" onclick="event.stopPropagation()" onchange="calcularTudo()">
+            <div class="overclock-box" id="overclockBox">
+                <input type="checkbox" id="overclockMode">
                 <div>
                     <label for="overclockMode" style="margin:0; cursor:pointer;">Habilitar Modo Overclock (Arredondar p/ Cima)</label>
                     <div class="overclock-info">O alerta ⚠️ só aparecerá se a configuração usar a capacidade extra.</div>
@@ -322,7 +322,7 @@
 
 </div>
 
-<script src="script.js"></script>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
