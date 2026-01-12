@@ -2,8 +2,9 @@
 
 Sistema profissional de configuração e cálculo de painéis LED para projetos de videowall.
 
-![Version](https://img.shields.io/badge/version-6.2-blue)
+![Version](https://img.shields.io/badge/version-7.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Architecture](https://img.shields.io/badge/architecture-ESM%20Modules-green)
 
 ## 🎯 Funcionalidades
 
@@ -72,9 +73,31 @@ Não requer instalação ou servidor - funciona 100% no cliente!
 ## 🛠️ Tecnologias
 
 - HTML5 Canvas para visualização
-- JavaScript ES6+ puro (sem frameworks)
+- JavaScript ES6+ modular (ESM) - 100% client-side
 - CSS3 com Material Design 3
 - LocalStorage para persistência
+- Zero dependências externas
+
+### Arquitetura (v7.0)
+
+```
+js/modules/
+├── state.js              # Gerenciamento central de estado
+├── calculations.js       # Lógica de cálculos de layout
+├── canvas.js            # Renderização visual
+├── storage.js           # Persistência localStorage
+├── gabinetes.js         # Model e validação de gabinetes
+├── gabinete-system.js   # CRUD de gabinetes
+├── screens.js           # Gerenciamento de telas
+├── ui.js                # Bindings de inputs e navegação
+├── theme.js             # Gestão de temas dark/light
+└── reports.js           # Geração de relatórios PDF
+```
+
+**Mudança Major v6.2 → v7.0**: Refatoração completa de monolith para arquitetura modular ESM
+- 10+ módulos independentes com responsabilidades claras
+- 100% event listener based (zero onclick inline)
+- Código limpo e otimizado para manutenção
 
 ## 📋 Roadmap Implementado
 
@@ -82,6 +105,10 @@ Não requer instalação ou servidor - funciona 100% no cliente!
 - ✅ Fase 2: Dados Físicos e Estatísticas
 - ✅ Fase 3: Visualização de Cabeamento
 - ✅ Fase 4: Exportação e Relatórios
+- ✅ **v7.0**: Modularização completa em ESM
+  - Fase 1-4: State, Calculations, Canvas, Storage, Gabinetes, Screens, UI
+  - Fase 5-7: Theme, Gabinete System, Reports
+  - Refactor: Event listeners 100%, code cleanup, imports optimization
 
 ## 🤝 Contribuindo
 
