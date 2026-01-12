@@ -1,19 +1,14 @@
-/* 
+/*
  * LedLab Configurator Pro v7.0
- * Main stylesheet - aggregates all modular CSS files
+ * Single entrypoint: themes + modular bundle (+ mobile overrides)
  */
 
-/* Material Design 3 Themes */
+/* Material Design 3 Themes (base tokens) */
 @import url("src/styles/material-light.css");
 @import url("src/styles/material-dark.css");
 
-/* Modular Stylesheets */
-@import url("src/styles/variables.css");
-@import url("src/styles/base.css");
-@import url("src/styles/layout.css");
-@import url("src/styles/nav.css");
-@import url("src/styles/sidebar.css");
-@import url("src/styles/cards.css");
-@import url("src/styles/forms.css");
-@import url("src/styles/canvas.css");
+/* Modular bundle (variables, base, layout, components, etc.) */
 @import url("src/styles/main.css");
+
+/* Mobile overrides */
+@import url("src/styles/mobile.css");
