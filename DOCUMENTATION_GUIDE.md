@@ -1,315 +1,332 @@
-# 📚 Guia de Documentação - LED Lab Calc v7.0
+# 📚 LedLab Configurator Pro - Guia Técnico (v7.0)
 
-**Última Atualização**: 11 de Janeiro de 2026  
-**Versão**: v7.0 (Refatoração Modular)
+## Visão Geral da Arquitetura
 
----
-
-## 📖 Visão Geral
-
-Após a refatoração da arquitetura modular, foram criados 2 documentos críticos para manter a qualidade e organização do projeto:
-
-### 1. 🐛 **ISSUES_AND_IMPROVEMENTS.md**
-- **Propósito**: Documentar bugs, issues e melhorias identificadas
-- **Quando usar**: Ao retomar o trabalho, para saber exatamente o que fazer
-- **Leitura recomendada**: 10-15 minutos
-
-### 2. 🧪 **TESTING_PLAN.md**
-- **Propósito**: Plano sistemático para testar 100% das funcionalidades
-- **Quando usar**: Para validar que nada quebrou após mudanças
-- **Leitura recomendada**: 5 minutos (seguir checklist durante testes)
-
----
-
-## 🎯 Como Usar Esses Documentos
-
-### Cenário 1: Começando uma Nova Sessão de Trabalho
-
-**Passo 1**: Abrir `ISSUES_AND_IMPROVEMENTS.md`
-- Ler resumo executivo (2 min)
-- Focar nas issues de Alta Prioridade
-- Entender o que precisa ser feito
-
-**Passo 2**: Entender o plano de ação
-- Sprint 1: Critical Fixes
-- Sprint 2: UX Improvements
-- Sprint 3: Polish
-
-**Passo 3**: Iniciar trabalho conforme prioridade
-
----
-
-### Cenário 2: Antes de Fazer Commit
-
-**Passo 1**: Abrir `TESTING_PLAN.md`
-- Executar testes relevantes às mudanças
-- Marcar cada teste como ✅ Passou
-- Documentar bugs em `ISSUES_AND_IMPROVEMENTS.md`
-
-**Passo 2**: Verificar console
-- F12 → Console
-- Não deve haver erros vermelhos críticos
-
-**Passo 3**: Fazer commit com confiança
-
----
-
-### Cenário 3: Encontrou um Bug
-
-**Passo 1**: Abrir `ISSUES_AND_IMPROVEMENTS.md`
-- Scrollar para "🐛 Issues Críticas"
-- Verificar se o bug já está documentado
-
-**Passo 2**: Se é novo bug:
-- Criar seção nova com template:
-  ```
-  ### Issue #X: [Título do Bug]
-  
-  **Severidade**: 🔴/🟡/🟢  
-  **Status**: 🔴 Aberto  
-  **Afeta**: [Módulo]
-  
-  #### Descrição
-  [Descrever problema]
-  
-  #### Passos para Reproduzir
-  1. ...
-  ```
-
-**Passo 3**: Depois de corrigir:
-- Atualizar status para 🟢 Resolvido
-- Adicionar checklist de validação
-
----
-
-## 📊 Estrutura de Issues_and_Improvements.md
+LedLab v7.0 é uma arquitetura completamente modularizada em **ES6 Modules (ESM)**, eliminando dependências externas e oferecendo máxima performance client-side.
 
 ```
-📄 ISSUES_AND_IMPROVEMENTS.md
-├── 📋 Resumo Executivo
-├── 🔴 Issues Críticas (ALTA PRIORIDADE)
-│   ├── Issue #1: Navegação de Abas
-│   ├── Issue #2: Cards de Telas
-│   └── Issue #3: Testes Incompletos
-├── 🟡 Issues de Média Prioridade
-│   ├── Issue #4: Mobile Menu
-│   └── Issue #5: Estilos Responsivos
-├── 🟢 Melhorias Futuras
-│   ├── Sugestão #1: Auto-Save Indicator
-│   └── Sugestão #2: Dark Mode Padrão
-├── 📊 Matriz de Priorização
-├── 🎯 Plano de Ação (3 Sprints)
-└── ✅ Checklist Geral
+Single Entry Point: script.js
+        ↓
+    10+ ESM Modules
+        ↓
+    100% Event Listener Based
 ```
 
 ---
 
-## 📊 Estrutura de TESTING_PLAN.md
+## 📁 Estrutura de Módulos
 
-```
-📄 TESTING_PLAN.md
-├── 🖥️ Teste 1: Carregamento
-├── 📺 Teste 2: Navegação de Abas
-├── ⚙️ Teste 3: Gerenciamento de Telas
-├── 🧮 Teste 4: Cálculos
-├── 📊 Teste 5: Canvas
-├── 📦 Teste 6: Gabinetes
-├── 📄 Teste 7: Relatórios
-├── 🎨 Teste 8: Temas
-├── 💾 Teste 9: Storage
-├── 📱 Teste 10: Responsividade
-├── ⌨️ Teste 11: Atalhos
-├── 🔍 Teste 12: Console
-├── 📊 Resumo de Testes (Matriz)
-├── 🐛 Bugs Encontrados (Template)
-└── ✅ Checklist Final
-```
+### Core State Management
+#### `js/modules/state.js`
+Gerencia todo o estado centralizado da aplicação.
 
----
+**Exports:**
+- `currentProject` - Objeto com screens[] e activeScreenIndex
+- `addScreen(name)` - Cria nova tela
+- `setActiveScreen(index)` - Define tela ativa
+- `getActiveScreen()` - Retorna tela ativa
+- `loadScreenToUI(index)` - Carrega dados na interface
 
-## 🔄 Fluxo de Trabalho Recomendado
+**Exemplo:**
+```javascript
+import { currentProject, addScreen, setActiveScreen } from "./state.js";
 
-```
-┌─────────────────────────────────┐
-│  1. Ler ISSUES_AND_IMPROVEMENTS │
-│     (Entender o que fazer)      │
-└──────────────┬──────────────────┘
-               │
-┌──────────────▼──────────────────┐
-│  2. Selecionar Issue/Sprint      │
-│     (Priorizar trabalho)         │
-└──────────────┬──────────────────┘
-               │
-┌──────────────▼──────────────────┐
-│  3. Fazer mudanças no código     │
-│     (Implementar solução)        │
-└──────────────┬──────────────────┘
-               │
-┌──────────────▼──────────────────┐
-│  4. Testar com TESTING_PLAN     │
-│     (Validar mudanças)          │
-└──────────────┬──────────────────┘
-               │
-        ┌──────▼──────┐
-        │   Passou?   │
-        └──────┬──────┘
-          ✅ /    \ ❌
-           /        \
-      [Commit]   [Debugar]
-        │              │
-        │              │
-        └──────┬───────┘
-               │
-    [Próximo Issue]
+addScreen("Tela 2");
+setActiveScreen(1);
 ```
 
 ---
 
-## 📝 Como Atualizar os Documentos
+### Cálculos e Visualização
+#### `js/modules/calculations.js`
+Lógica principal de cálculos de layout e limites de pixel.
 
-### Após Corrigir Issue:
+**Exports:**
+- `calcularTudo()` - Executa todos os 4 modos de cálculo
+- `atualizarManual()` - Atualiza modo manual específico
+- `updatePhysicalStats()` - Recalcula peso/consumo
+- `calculatePhysicalStats()` - Retorna stats atuais
+- `getCor(modo)` - Retorna cor do modo de cálculo
 
-1. Abrir `ISSUES_AND_IMPROVEMENTS.md`
-2. Encontrar a issue
-3. Mudar status:
-   ```markdown
-   **Status**: 🟢 **Resolvido** (era 🔴 **Aberto**)
-   ```
-4. Adicionar commit hash:
-   ```markdown
-   **Corrigido em**: Commit abc123d
-   **Data**: 12 de Janeiro de 2026
-   ```
-
-### Após Descobrir Novo Bug:
-
-1. Abrir `ISSUES_AND_IMPROVEMENTS.md`
-2. Rolar para fim da seção apropriada
-3. Adicionar nova issue com template completo
-4. Atualizar numeração
-
-### Após Executar Testes:
-
-1. Abrir `TESTING_PLAN.md`
-2. Preencher matriz com resultados
-3. Documentar bugs encontrados
-4. Datar execução
+**Constantes:**
+- `MAX_PIXELS_PORTA: 655360` - Limite máximo de pixels
 
 ---
 
-## 🎓 Exemplo Prático
+#### `js/modules/canvas.js`
+Renderização visual dos layouts em canvas HTML.
 
-### Cenário: Corrigir Issue #1 (Navegação de Abas)
+**Exports:**
+- `desenharMapeamento()` - Renderiza layout escolhido
+- `gerarLegenda()` - Cria legenda de cores
 
-**Passo 1**: Abrir `ISSUES_AND_IMPROVEMENTS.md`
-```
-### Issue #1: Perda de Estilos nos Botões de Navegação
-**Status**: 🔴 **Aberto**
-```
+**Dependências:**
+- `state.js` - Para dados de tela ativa
+- `calculations.js` - Para cores e validações
 
-**Passo 2**: Ler descrição e checklist
-- Revisar CSS do componente nav ☐
-- Verificar classes CSS aplicadas ☐
-- Testar animação do indicador ☐
-- Validar em mobile ☐
+---
 
-**Passo 3**: Fazer mudanças:
-- Editar `src/styles/nav.css`
-- Editar `src/js/modules/ui.js`
+### Persistência de Dados
+#### `js/modules/storage.js`
+CRUD de gabinetes em localStorage.
 
-**Passo 4**: Testar com `TESTING_PLAN.md`
-```
-## Teste 2: Navegação de Abas
-- A. Botões de Navegação: ✅ Passou
-- B. Indicador Visual: ✅ Passou
-- C. Conteúdo das Abas: ✅ Passou
-```
+**Exports:**
+- `getGabinetes()` - Array de todos gabinetes
+- `saveGabinete(obj)` - Salva novo gabinete
+- `updateGabinete(id, obj)` - Atualiza existente
+- `deleteGabinete(id)` - Remove gabinete
+- `getGabineteById(id)` - Busca por ID
+- `clearAllGabinetes()` - Limpa storage
 
-**Passo 5**: Fazer commit
-```bash
-git commit -m "fix: Restore navigation button styles and indicator animation
-
-- Fixed CSS selectors in src/styles/nav.css
-- Updated initNavigation() in src/js/modules/ui.js
-- Verified smooth transitions (0.3s ease)
-- Tested on desktop, tablet, mobile
-
-Issue #1 fixed ✅"
-```
-
-**Passo 6**: Atualizar documentação
-```markdown
-### Issue #1: Perda de Estilos nos Botões de Navegação
-**Status**: 🟢 **Resolvido**
-**Corrigido em**: abc123d
-**Data**: 12 de Janeiro de 2026
+**Storage Key:**
+```javascript
+"ledlab-gabinetes" // localStorage key
 ```
 
 ---
 
-## 📌 Checklist de Qualidade
+#### `js/modules/gabinetes.js`
+Model e validação de gabinetes LED.
 
-Antes de fazer commit, verificar:
+**Exports:**
+- `createGabinete(...)` - Factory com validação
+- `validateGabinete(obj)` - Valida dados
+- `formatGabineteDisplay(obj)` - Formato para UI
+- `getPixelPitch(obj)` - Calcula pitch em pixels
+- `filterGabinetesByAmbiente(arr, tipo)` - Filtra por tipo
 
-- [ ] Issue documentada em `ISSUES_AND_IMPROVEMENTS.md`?
-- [ ] Testes executados com `TESTING_PLAN.md`?
-- [ ] Todos os testes relacionados ✅ Passaram?
-- [ ] Console limpo de erros?
-- [ ] Responsividade testada (desktop, tablet, mobile)?
-- [ ] Código segue padrão modular?
-- [ ] Commit message é descritiva?
-- [ ] Status de issue atualizado?
-
----
-
-## 🔗 Arquivos Relacionados
-
-- [ISSUES_AND_IMPROVEMENTS.md](ISSUES_AND_IMPROVEMENTS.md) - Bugs e melhorias
-- [TESTING_PLAN.md](TESTING_PLAN.md) - Plano de testes
-- [README.md](README.md) - Documentação geral
-- [roadmap-v7.md](roadmap-v7.md) - Roadmap futuro
-- [src/](src/) - Código-fonte modular
-
----
-
-## 📚 Links de Referência
-
-### Issues Críticas
-- [Issue #1: Navegação](ISSUES_AND_IMPROVEMENTS.md#issue-1-perda-de-estilos-nos-botões-de-navegação)
-- [Issue #2: Cards de Telas](ISSUES_AND_IMPROVEMENTS.md#issue-2-card-de-telas-com-legibilidade-comprometida)
-- [Issue #3: Testes](ISSUES_AND_IMPROVEMENTS.md#issue-3-testes-de-funcionalidades-incompletos)
-
-### Plano de Testes
-- [Teste 1: Carregamento](TESTING_PLAN.md#-teste-1-carregamento-da-aplicação)
-- [Teste 2: Navegação](TESTING_PLAN.md#-teste-2-navegação-de-abas)
-- [Matriz de Testes](TESTING_PLAN.md#-resumo-de-testes)
+**Estrutura:**
+```javascript
+{
+  id: number,
+  fabricante: string,
+  nome: string,
+  pixel_w: number,
+  pixel_h: number,
+  mm_w: number,
+  mm_h: number,
+  peso: number,
+  consumo: number,
+  ambiente: "indoor|outdoor",
+  pixel_pitch: string,
+  nits: number,
+  refresh_rate: number,
+  ip_rating: string
+}
+```
 
 ---
 
-## 🆘 Precisa de Ajuda?
+### Sistema de Gabinetes
+#### `js/modules/gabinete-system.js`
+CRUD completo com delegação de eventos e validação.
 
-1. **Bug encontrado**: Consulte `ISSUES_AND_IMPROVEMENTS.md` - seção "Issues Críticas"
-2. **Não sabe o que testar**: Abra `TESTING_PLAN.md` e siga o checklist
-3. **Onde começar**: Leia esta documentação (2-3 min) e depois `ISSUES_AND_IMPROVEMENTS.md`
+**Exports:**
+- `initGabineteSystem()` - Setup inicial
+- `deleteGabinete(id)` - Remove e atualiza UI
+- `loadGabineteToConfigurator(id)` - Carrega em form
 
----
-
-## 📅 Cronograma Sugerido
-
-**Próxima Sessão**:
-- ⏱️ 10 min: Ler documentação
-- ⏱️ 30 min: Sprint 1 (Critical Fixes)
-- ⏱️ 20 min: Executar TESTING_PLAN.md
-- ⏱️ 10 min: Fazer commits
-
-**Total**: ~70 minutos
+**Features:**
+- Event delegation para botões Usar/Excluir
+- Confirmação de exclusão
+- Auto-load de dados físicos (peso/consumo)
 
 ---
 
-**Status**: ✅ Documentação Completa  
-**Próxima Atualização**: Após conclusão de Sprint 1  
-**Responsável**: [Seu Nome]
+### UI e Navegação
+#### `js/modules/screens.js`
+Gerenciamento de telas na sidebar e resumo global.
+
+**Exports:**
+- `renderScreenList()` - Renderiza lista de telas
+- `initScreensUI(reportCallback)` - Setup botões
+- `updateGlobalSummary()` - Atualiza totalizadores
+
+**Eventos Customizados:**
+```javascript
+new CustomEvent('layoutTypeChanged', { detail: { layoutType: 'horizontal|vertical' } })
+```
 
 ---
 
-> 🎯 **Objetivo**: Com esses documentos, você saberá **exatamente** o que precisa fazer ao retomar o trabalho. Não há ambiguidade. Apenas execute o checklist. ✨
+#### `js/modules/ui.js`
+Bindings de inputs, navegação e temas.
+
+**Exports:**
+- `initTabs()` - Setup de abas (Manual, Largura, etc)
+- `initNavigation()` - Setup páginas (Configurador, Gabinetes, etc)
+- `initInputPersistence(callback)` - Auto-save em state
+
+**Auto-save Fields:**
+- pixelX, pixelY
+- cabinetX, cabinetY
+- cablingType (dispara `layoutTypeChanged`)
+- gabineteSalvo (dispara `gabineteSalvoChanged`)
+- overclockMode (executa `calcularTudo()`)
+
+---
+
+#### `js/modules/theme.js`
+Gestão de temas dark/light com persistência.
+
+**Exports:**
+- `initTheme()` - Setup inicial (detecção de preferência)
+- `applyTheme(theme)` - Aplica "light" ou "dark"
+
+**Storage Key:**
+```javascript
+"ledlab-theme"
+```
+
+---
+
+### Relatórios
+#### `js/modules/reports.js`
+Geração de relatório PDF printer-friendly.
+
+**Exports:**
+- `generateProjectReport()` - Abre nova janela com relatório
+
+**Features:**
+- Captura de canvas (toDataURL)
+- Layout A4 otimizado
+- Print via Ctrl+P ou botão
+- Inclui todas as telas do projeto
+
+---
+
+## 🔄 Fluxo de Dados
+
+```
+User Input (event listener)
+       ↓
+Handler em módulo específico
+       ↓
+Update state.js (currentProject)
+       ↓
+Trigger calcularTudo() ou outra função
+       ↓
+Renderizar canvas/UI via module correspondente
+```
+
+### Exemplo: Adicionar Tela
+1. Usuário clica "➕ Adicionar Tela"
+2. `screens.js` dispara `addScreen()`
+3. `state.js` atualiza `currentProject.screens`
+4. `renderScreenList()` re-renderiza sidebar
+5. Tela ativa é loaded na UI via `loadScreenToUI()`
+
+---
+
+## ⚡ Padrões de Desenvolvimento
+
+### Event Listeners (NOT onclick)
+```javascript
+// ❌ ERRADO
+<button onclick="deleteGabinete(5)">Deletar</button>
+
+// ✅ CORRETO
+container.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn-delete')) {
+        const id = parseInt(e.target.dataset.gabinetId);
+        deleteGabinete(id);
+    }
+});
+```
+
+### Custom Events
+```javascript
+document.dispatchEvent(
+    new CustomEvent('layoutTypeChanged', { 
+        detail: { layoutType: 'horizontal' } 
+    })
+);
+
+document.addEventListener('layoutTypeChanged', (e) => {
+    console.log(e.detail.layoutType);
+});
+```
+
+### Module Import Pattern
+```javascript
+// Apenas o necessário
+import { getActiveScreen } from './state.js';
+import { updatePhysicalStats } from './calculations.js';
+
+// Nunca: import * as state from './state.js'
+```
+
+---
+
+## 🧪 Testing & Debugging
+
+### Console Limpo
+- Todos os `console.log` de debug foram removidos
+- Apenas `console.error` é usado para erros críticos
+- Acesso ao estado global: `window.currentProject`
+
+### LocalStorage
+```javascript
+// Verificar dados salvos
+localStorage.getItem('ledlab-gabinetes')  // Gabinetes
+localStorage.getItem('ledlab-theme')      // Tema
+
+// Limpar tudo
+localStorage.clear()
+```
+
+### DevTools Canvas
+```javascript
+// Acessar canvas
+document.getElementById('canvas-largura')
+document.getElementById('canvas-altura')
+document.getElementById('canvas-area')
+document.getElementById('canvas-manual')
+```
+
+---
+
+## 📋 Checklist para Novos Módulos
+
+1. **Criar arquivo em `js/modules/nome.js`**
+2. **Definir responsabilidade única**
+3. **Usar imports absolutos: `./` somente**
+4. **Exportar apenas funções públicas**
+5. **Sem `window.` pollution**
+6. **Event listeners, não onclick**
+7. **Adicionar imports em `script.js`**
+8. **Testar isoladamente**
+
+---
+
+## 🚀 Performance
+
+- **Zero frameworks**: Pure JS com 0 overhead
+- **Single module entry**: Todos imports centralizados
+- **Event delegation**: Mínimo número de listeners
+- **LocalStorage**: Cache local, sem requests
+- **Canvas rendering**: GPU accelerated
+
+---
+
+## 🔐 Segurança
+
+- **Input validation**: Todos os inputs em `gabinetes.js`
+- **No eval()**: Jamais usado
+- **XSS prevention**: Template strings puras
+- **CSRF protection**: Não aplicável (client-side)
+- **Sanitization**: HTML values escapados
+
+---
+
+## 📞 Suporte
+
+Para dúvidas sobre a arquitetura, consulte:
+- `script.js` - Entry point e orchestration
+- `js/modules/*` - Cada módulo é independente e documentado
+- Issues no GitHub
+
+---
+
+**v7.0 - Complete ESM Modularization**
+Última atualização: 2026-01-11

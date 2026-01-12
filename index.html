@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LedLab Configurator Pro v7.0 - Refactored</title>
-    <!-- Material Design Theme (will be dynamically loaded) -->
-    <link id="themeLink" rel="stylesheet" href="src/themes/material-theme/css/light.css">
-    <!-- Main Stylesheet (modular CSS) -->
-    <link rel="stylesheet" href="src/styles/main.css">
-    <!-- Mobile Responsive Stylesheet -->
-    <link rel="stylesheet" href="mobile.css">
+    <title>LedLab Configurator Pro v6.2</title>
+    <!-- Material Design Themes -->
+    <link rel="stylesheet" href="temas/material-theme/css/light.css">
+    <link rel="stylesheet" href="temas/material-theme/css/dark.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -30,30 +29,18 @@
             </button>
         </div>
         <div class="nav-actions">
-            <button id="themeToggleBtn" type="button" class="nav-button theme-btn">
+            <button id="themeToggle" type="button" class="nav-button theme-btn">
                 <span class="theme-icon">🌙</span>
             </button>
         </div>
     </div>
-    <!-- Barra de abas visual -->
-    <div class="tabs-bar">
-        <div class="tab-indicator active" id="tabIndicator"></div>
-    </div>
 </nav>
 
 <div class="container">
-    <!-- OVERLAY PARA FECHAR SIDEBAR NO MOBILE -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- BOTÃO HAMBURGUER MOBILE -->
-    <button class="mobile-menu-toggle" id="mobileMenuToggle">
-        📱
-    </button>
-
     <!-- PÁGINA: CONFIGURADOR -->
     <div class="page-content active" id="page-configurator">
         <!-- SIDEBAR DE NAVEGAÇÃO DE TELAS -->
-        <aside class="screens-sidebar" id="screensSidebar">
+        <aside class="screens-sidebar">
             <div class="sidebar-header">
                 <h3>📺 Telas</h3>
             </div>
@@ -326,40 +313,16 @@
         </div>
             </div>
         </div>
+    </main>
     </div>
     <!-- FIM PÁGINA: CONFIGURADOR -->
 
+    <!-- PÁGINA: CADASTRO -->
+    <div class="page-content" id="page-cadastro">
+
 </div>
-<!-- FIM CONTAINER -->
 
-<!-- JavaScript Modules (ordem de dependência) -->
-
-<!-- 1. Storage Module (sem dependências) -->
-<script src="src/js/modules/storage.js"></script>
-
-<!-- 2. Theme Module (sem dependências) -->
-<script src="src/js/modules/theme.js"></script>
-
-<!-- 3. Calculations Module (sem dependências) -->
-<script src="src/js/modules/calculations.js"></script>
-
-<!-- 4. Canvas Module (depende de calculations) -->
-<script src="src/js/modules/canvas.js"></script>
-
-<!-- 5. Screens Module (sem dependências) -->
-<script src="src/js/modules/screens.js"></script>
-
-<!-- 6. Gabinetes Module (sem dependências) -->
-<script src="src/js/modules/gabinetes.js"></script>
-
-<!-- 7. UI Module (depende de screens, canvas) -->
-<script src="src/js/modules/ui.js"></script>
-
-<!-- 8. Reports Module (depende de screens) -->
-<script src="src/js/modules/reports.js"></script>
-
-<!-- 9. Main Entry Point (depende de todos) -->
-<script src="src/js/modules/main.js"></script>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>

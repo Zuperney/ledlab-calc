@@ -1,27 +1,17 @@
 # 💡 LedLab Configurator Pro
 
-Sistema profissional de configuração e cálculo de painéis LED para projetos de videowall. Interface responsiva mobile-first com suporte completo para dispositivos móveis.
+Sistema profissional de configuração e cálculo de painéis LED para projetos de videowall.
 
-![Version](https://img.shields.io/badge/version-6.2-blue)
+![Version](https://img.shields.io/badge/version-7.0-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Responsive](https://img.shields.io/badge/responsive-mobile--first-purple)
-![Status](https://img.shields.io/badge/status-production-success)
+![Architecture](https://img.shields.io/badge/architecture-ESM%20Modules-green)
 
 ## 🎯 Funcionalidades
-
-### � Design Responsivo Mobile-First
-- Interface totalmente adaptada para smartphones e tablets
-- Sidebar colapsável com botão hamburguer flutuante
-- Touch-friendly: botões otimizados para toque (44px mínimo)
-- Canvas responsivo com scroll suave
-- Tabs horizontais com scroll touch
-- Previne zoom acidental em inputs iOS/Android
 
 ### 📺 Multi-Telas
 - Gerencie múltiplas configurações de telas no mesmo projeto
 - Alterne entre telas com persistência automática de dados
 - Interface sidebar intuitiva com resumo global
-- Sidebar mobile se fecha automaticamente ao selecionar tela
 
 ### 🧮 Cálculos Inteligentes
 - **4 modos de cálculo**: Manual, Horizontal, Vertical e Melhor Área
@@ -52,27 +42,16 @@ Sistema profissional de configuração e cálculo de painéis LED para projetos 
 
 ## 🚀 Como Usar
 
-### 🌐 Online (GitHub Pages)
-Acesse: **https://zuperney.github.io/ledlab-calc/**
+### Online (GitHub Pages)
+Acesse: `https://[seu-usuario].github.io/led-lab_calc/`
 
-### 📱 No Celular
-1. Acesse o link acima no navegador mobile
-2. Use o botão flutuante 📱 para abrir/fechar a sidebar
-3. Arraste para navegar no canvas
-4. Todos os recursos desktop disponíveis!
-
-### 💻 Local (Desenvolvimento)
+### Local
 1. Clone o repositório:
 ```bash
-git clone https://github.com/Zuperney/ledlab-calc.git
+git clone https://github.com/[seu-usuario]/led-lab_calc.git
 ```
 
 2. Abra o `index.html` em qualquer navegador moderno
-
-3. Ou use Live Server para testar no celular:
-   - Instale a extensão "Live Server" no VS Code
-   - Clique com botão direito em `index.html` → "Open with Live Server"
-   - No celular (mesma rede WiFi): acesse `http://SEU_IP:5500`
 
 Não requer instalação ou servidor - funciona 100% no cliente!
 
@@ -93,100 +72,58 @@ Não requer instalação ou servidor - funciona 100% no cliente!
 
 ## 🛠️ Tecnologias
 
-- **Frontend**: HTML5 Canvas para visualização
-- **JavaScript**: ES6+ puro (sem frameworks ou dependências)
-- **CSS3**: Material Design 3 + Mobile-first responsive design
-- **Storage**: LocalStorage para persistência offline
-- **Responsividade**: Media queries mobile, tablet, desktop e landscape
-- **PWA Ready**: Preparado para Progressive Web App
+- HTML5 Canvas para visualização
+- JavaScript ES6+ modular (ESM) - 100% client-side
+- CSS3 com Material Design 3
+- LocalStorage para persistência
+- Zero dependências externas
 
-## 📱 Suporte de Dispositivos
+### Arquitetura (v7.0)
 
-| Dispositivo | Resolução | Status |
-|-------------|-----------|--------|
-| 📱 iPhone 12/13/14 | 390x844 | ✅ Otimizado |
-| 📱 Samsung Galaxy | 360x800 | ✅ Otimizado |
-| 📱 Android Genérico | 360-480px | ✅ Otimizado |
-| 📱 Tablets | 768-1024px | ✅ Otimizado |
-| 💻 Desktop | 1024px+ | ✅ Otimizado |
-| 🔄 Landscape Mobile | 768px landscape | ✅ Otimizado |
+```
+js/modules/
+├── state.js              # Gerenciamento central de estado
+├── calculations.js       # Lógica de cálculos de layout
+├── canvas.js            # Renderização visual
+├── storage.js           # Persistência localStorage
+├── gabinetes.js         # Model e validação de gabinetes
+├── gabinete-system.js   # CRUD de gabinetes
+├── screens.js           # Gerenciamento de telas
+├── ui.js                # Bindings de inputs e navegação
+├── theme.js             # Gestão de temas dark/light
+└── reports.js           # Geração de relatórios PDF
+```
+
+**Mudança Major v6.2 → v7.0**: Refatoração completa de monolith para arquitetura modular ESM
+- 10+ módulos independentes com responsabilidades claras
+- 100% event listener based (zero onclick inline)
+- Código limpo e otimizado para manutenção
 
 ## 📋 Roadmap Implementado
 
-### ✅ Versão 6.2 (Atual)
-- ✅ **Fase 1**: Arquitetura Multi-Telas com sidebar navegável
-- ✅ **Fase 2**: Dados Físicos e Estatísticas (peso, consumo, amperes)
-- ✅ **Fase 3**: Visualização de Cabeamento (Z-Type/U-Type)
-- ✅ **Fase 4**: Exportação e Relatórios printer-friendly
-- ✅ **Extra**: Design Responsivo Mobile-First completo
-
-### 🔜 Versão 7.0 (Roadmap)
-Veja o roadmap completo em [roadmap-v7.md](roadmap-v7.md):
-- 🎛️ **Sistema de Equipamentos**: MTRL600, VX1000, MCTRL4K, VX2000
-- 📊 **Relatório Profissional Avançado**: Resolução, tensão, lista de materiais
-- ⚙️ **Configurações Avançadas**: Cores customizadas, overclock personalizado
-- 📚 **Central de Ajuda**: Tutoriais e guias integrados
-- 👤 **Sistema de Usuários**: Login, cloud sync, galeria de projetos
-- 🚀 **Features Premium**: PWA, QR Code, estimativa de custos
-
-## 🗂️ Estrutura de Arquivos
-
-```
-led-lab_calc/
-├── index.html              # Página principal do configurador
-├── cadastro.html           # Página de cadastro de gabinetes
-├── style.css               # Estilos desktop e base
-├── mobile.css              # Estilos responsivos mobile-first
-├── script.js               # Lógica principal (~1000 linhas)
-├── roadmap.md              # Roadmap original (v6.0)
-├── roadmap-v7.md           # Roadmap futuro (v7.0+)
-├── .gitignore              # Exclusões do Git
-├── LICENSE                 # Licença MIT
-└── src/                    # Código-fonte (estrutura modular)
-    ├── js/modules/         # 8 módulos JavaScript
-    ├── styles/             # 9 arquivos CSS modulares
-    └── themes/             # Temas (Material Design 3)
-        └── material-design-3/
-            └── css/        # Temas light/dark com variações
-```
+- ✅ Fase 1: Arquitetura Multi-Telas
+- ✅ Fase 2: Dados Físicos e Estatísticas
+- ✅ Fase 3: Visualização de Cabeamento
+- ✅ Fase 4: Exportação e Relatórios
+- ✅ **v7.0**: Modularização completa em ESM
+  - Fase 1-4: State, Calculations, Canvas, Storage, Gabinetes, Screens, UI
+  - Fase 5-7: Theme, Gabinete System, Reports
+  - Refactor: Event listeners 100%, code cleanup, imports optimization
 
 ## 🤝 Contribuindo
 
 Contribuições são bem-vindas! Sinta-se livre para:
-- 🐛 Reportar bugs
-- 💡 Sugerir novas funcionalidades
-- 🔧 Enviar pull requests
-- 📱 Testar em diferentes dispositivos
-- 📖 Melhorar documentação
-
-### Como Contribuir:
-1. Fork o projeto
-2. Crie uma branch: `git checkout -b feature/nova-funcionalidade`
-3. Commit: `git commit -m "feat: Adiciona nova funcionalidade"`
-4. Push: `git push origin feature/nova-funcionalidade`
-5. Abra um Pull Request
+- Reportar bugs
+- Sugerir novas funcionalidades
+- Enviar pull requests
 
 ## 📄 Licença
 
-MIT License - veja [LICENSE](LICENSE) para detalhes
-
-## 🔗 Links Úteis
-
-- **Demo Online**: https://zuperney.github.io/ledlab-calc/
-- **Repositório**: https://github.com/Zuperney/ledlab-calc
-- **Issues**: https://github.com/Zuperney/ledlab-calc/issues
-- **Roadmap v7.0**: [roadmap-v7.md](roadmap-v7.md)
+MIT License - veja LICENSE para detalhes
 
 ## 👤 Autor
 
-**Zuperney**
-- GitHub: [@Zuperney](https://github.com/Zuperney)
-
 Desenvolvido para profissionais da indústria LED
-
----
-
-⭐ **Se este projeto foi útil, considere dar uma estrela no GitHub!**
 
 ---
 
